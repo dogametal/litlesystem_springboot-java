@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //Applied Serializable convert in bytes to flow network export files
 @Entity
 @Table(name ="tb_user")
@@ -26,6 +28,7 @@ public class User implements Serializable{
 	private String password;
 	
 	//This is ready to receive all information from Orders	
+	@JsonIgnore //This annotation to avoid infinite loop because <> and to be able to see default view ex(cust 1 see 3 orders)
 	@OneToMany(mappedBy = "client")
 	private List<Orders> orders = new ArrayList<>();
 	
