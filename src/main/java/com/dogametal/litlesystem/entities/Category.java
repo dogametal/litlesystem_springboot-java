@@ -23,7 +23,7 @@ public class Category implements Serializable{
 	private Long id;
 	private String name;
 	
-	@JsonIgnore
+	@JsonIgnore //This to ignore infinite looping on Postman
 	@ManyToMany(mappedBy = "categories")
 	//This method for association products with categories --collection in Products (categories)
 	private Set<Product> products = new HashSet<>();
