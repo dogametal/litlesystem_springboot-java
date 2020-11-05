@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.dogametal.litlesystem.entities.Category;
+import com.dogametal.litlesystem.entities.OrderItem;
 import com.dogametal.litlesystem.entities.Orders;
 import com.dogametal.litlesystem.entities.Product;
 import com.dogametal.litlesystem.entities.User;
 import com.dogametal.litlesystem.entities.enums.OrderStatus;
 import com.dogametal.litlesystem.repositories.CategoryRepository;
+import com.dogametal.litlesystem.repositories.OrderItemRepository;
 import com.dogametal.litlesystem.repositories.OrderRepository;
 import com.dogametal.litlesystem.repositories.ProductRepository;
 import com.dogametal.litlesystem.repositories.UserRepository;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -58,13 +63,22 @@ public class TestConfig implements CommandLineRunner{
 		Orders o2 = new Orders(null, Instant.parse("2019-07-21T03:42:10Z"),OrderStatus.SHIPPED, u2);
 		Orders o3 = new Orders(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.DELIVERED,u1); 
 
+		// Here you put action to run order items set up first example o1 order number		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
+		
+		
 		// Here you save data on datababase
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3,oi4));
+
 		
-		// Here method for association data between category and products --needs to call repository
+		// Here method for association data between category and products --needs to call repository again
 		p1.getCategories().add(cat2);
 		p2.getCategories().add(cat1);
 		p2.getCategories().add(cat3);

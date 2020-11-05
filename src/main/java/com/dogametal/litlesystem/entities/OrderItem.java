@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.dogametal.litlesystem.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -14,8 +15,8 @@ import com.dogametal.litlesystem.entities.pk.OrderItemPK;
 public class OrderItem implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@EmbeddedId //This is to ignore created id unnecessary
-	private OrderItemPK id;
+	@EmbeddedId //This is to ignore created id unnecessary needs to instance id
+	private OrderItemPK id = new OrderItemPK();
 	
 	private Integer quantity;
 	private Double price;
@@ -31,6 +32,7 @@ public class OrderItem implements Serializable{
 		id.setProduct(product);
 	}
 	
+	@JsonIgnore //auxiliary class not exists info id order used here this Json as stopped end point for infinite looping on Postman 
 	public Orders getOrder() {
 		//get info from auxiliary class OrderItemPK
 		return id.getOrder();
