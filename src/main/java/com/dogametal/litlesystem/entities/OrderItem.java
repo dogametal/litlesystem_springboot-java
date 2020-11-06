@@ -32,7 +32,7 @@ public class OrderItem implements Serializable{
 		id.setProduct(product);
 	}
 	
-	@JsonIgnore //auxiliary class not exists info id order used here this Json as stopped end point for infinite looping on Postman 
+	@JsonIgnore //auxiliary class not exists info id order used here this Json as stopped end point for infinite looping on Postman
 	public Orders getOrder() {
 		//get info from auxiliary class OrderItemPK
 		return id.getOrder();
@@ -43,6 +43,7 @@ public class OrderItem implements Serializable{
 		id.setOrder(order);
 	}
 	
+
 	public Product getProduct() {
 		//get info from auxiliary class OrderItemPK
 		return id.getProduct();
