@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.dogametal.litlesystem.entities.Category;
 import com.dogametal.litlesystem.entities.OrderItem;
 import com.dogametal.litlesystem.entities.Orders;
+import com.dogametal.litlesystem.entities.Payment;
 import com.dogametal.litlesystem.entities.Product;
 import com.dogametal.litlesystem.entities.User;
 import com.dogametal.litlesystem.entities.enums.OrderStatus;
@@ -87,6 +88,11 @@ public class TestConfig implements CommandLineRunner{
 		p5.getCategories().add(cat2);
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));		
 		
+		
+		//Here Payment saved and applied repository because class dependent of Order (OneToOne for both)
+		Payment pay01 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPayment(pay01);
+		orderRepository.save(o1);
 		
 	} 
 	
