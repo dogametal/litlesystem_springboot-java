@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +62,13 @@ public class UserResource {
 		service.delete(id);
 		//method noContent treatment 204 status process deleted
 		return ResponseEntity.noContent().build();
+	}
+
+	//Annotation update
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<User> update (@PathVariable Long id, @RequestBody User obj){
+		obj = service.update(id, obj);
+		return ResponseEntity.ok().body(obj);
 	}
 	
 }
