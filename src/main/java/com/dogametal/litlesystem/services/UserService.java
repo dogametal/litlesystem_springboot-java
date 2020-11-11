@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.dogametal.litlesystem.entities.User;
 import com.dogametal.litlesystem.repositories.UserRepository;
+import com.dogametal.litlesystem.services.exceptions.ResourceNotFoundException;
 
 //Could be @Component but this is more explanation
 @Service
@@ -22,7 +23,10 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		//return obj.get();
+		
+		//Method applied to compare attempt run with id chosen
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert (User obj) {
