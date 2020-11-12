@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.dogametal.litlesystem.services.exceptions.DatabaseException;
 import com.dogametal.litlesystem.services.exceptions.ResourceNotFoundException;
 
 //This annotation responsible to get possible error for treatment
@@ -27,5 +28,18 @@ public class ResourceExceptionHandler {
 		
 		return ResponseEntity.status(status).body(err);
 	}
+
+	@ExceptionHandler(DatabaseException.class)
+	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request){
+		
+		String error = "Database Error .";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+	
+		//Personal class create for error treatment
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+		
+		return ResponseEntity.status(status).body(err);
+	}
+	
 	
 }
